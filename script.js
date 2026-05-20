@@ -172,18 +172,17 @@
     const statArea    = document.getElementById('stat-area');
     const counter     = document.getElementById('counter');
 
-    // ============================================================
+    
     // STEP 3: TRACK STATE
     // Which country is currently selected? Which have been visited?
-    // ============================================================
+    
     let selectedCountry = null;        // the currently highlighted <path>
     const visitedCountries = new Set(); // tracks unique countries clicked
-
-    // ============================================================
+    
     // STEP 4: ATTACH EVENTS TO EVERY COUNTRY PATH
     // querySelectorAll gives us all <path> elements as a list.
     // We loop through each one and add mouse event listeners.
-    // ============================================================
+    
     const allPaths = document.querySelectorAll('#africa-map path');
 
     allPaths.forEach(function(path) {

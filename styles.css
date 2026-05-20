@@ -1,22 +1,48 @@
-/* =============================================
+/*
        BASIC PAGE SETUP
        - Centers everything on a dark background
-    ============================================= */
+     */
+
+     :root {
+  /* COLORS */
+  --bg-dark: #02040a;
+  --text-main: #e6eefc;
+  --subtitle-text: #f4f7f5;
+
+  --accent-gold: #c69100;
+  --accent-blue: #7fd1ff;
+
+  --panel-bg: rgba(10, 15, 25, 0.55);
+
+  --map-default: #2f8f7a;
+  --map-hover: #5fd6c2;
+  --map-selected: #7cf3dd;
+
+  --tooltip-text: #bfe9ff;
+
+  --stat-label: rgba(180, 200, 220, 0.6);
+  --stat-value: #d7ecff;
+
+  --fact-text: rgba(210, 235, 255, 0.85);
+  --hint-text: rgba(200, 220, 240, 0.72);
+
+  --main-font: "Times New Roman", Times, serif;
+}
     body { 
-      font-family: "Times New Roma", sans-serif; 
+      font-family: var(--main-font);
       background: radial-gradient(circle at 20% 20%, rgba(90, 180, 255, 0.10), transparent 40%),
-    radial-gradient(circle at 80% 30%, rgba(120, 255, 220, 0.06), transparent 45%),
-    radial-gradient(circle at bottom, #040713, #02040a);
-      color: #e6eefc; 
+                  radial-gradient(circle at 80% 30%, rgba(120, 255, 220, 0.06), transparent 45%),
+                  radial-gradient(circle at bottom, var(--bg-dark), #02040a);
+      color: var(--text-main);
       text-align: center; 
       padding: 20px; 
     }
 
     h1 {
       font-size: 2.2rem;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #c69100;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: var(--accent-gold);
 
   text-shadow:
     0 0 6px rgba(198, 145, 0, 0.35),
@@ -25,27 +51,24 @@
     }
 
     p.subtitle {
-      color: #f4f7f5;
-      font-family:  "Times New Roman",Times,serif;
+      color: var(--subtitle-text);
+      font-family: var(--main-font);
+
       margin-bottom: 20px;
     }
 
-    /* =============================================
+    /* 
        THE GLOBE
-       - A circle made with border-radius: 50%
-       - Gradient gives it a 3D "ball" look
+       - A circle with border-radius: 50%
+       - Gradient gives it 3D "ball" look
        - overflow: hidden keeps the map inside
-    ============================================= */
+     */
     #globe 
     {
       width: 500px;
       height: 500px;
       border-radius: 50%;                        /* makes it a circle */
-       background: radial-gradient(
-    circle at 30% 30%,
-    #2b7a9b,
-    #050a18 70%
-  );
+       background: radial-gradient(circle at 30% 30%, #2b7a9b, #050a18 70%);
       border: 1px solid rgba(120, 200, 255, 0.25);
       box-shadow: 
            0 0 40px rgba(80, 180, 255, 0.15),
@@ -55,11 +78,11 @@
       overflow: hidden;                          /* clip map to circle shape */
     }
 
-    /* =============================================
+    /* 
        THE MAP INSIDE THE GLOBE
        - An SVG element centered inside the globe
        - scale() shrinks the map to fit
-    ============================================= */
+     */
     #africa-map {
       position: absolute;
       top: 50%;
@@ -67,60 +90,61 @@
       transform: translate(-50%, -50%) scale(0.44); /* center and shrink */
     }
 
-    /* =============================================
+    /* 
        COUNTRY SHAPES (SVG paths)
-       - Default: green fill
-       - Hover: orange (CSS handles this automatically)
-       - .selected: orange (added by JavaScript on click)
-    ============================================= */
+      
+     */
     #africa-map path {
        fill: #2f8f7a;          
        stroke: rgba(10, 20, 30, 0.6);        /* dark border between countries */
         stroke-width: 1.5px;
       cursor: pointer;         /* shows hand cursor on hover */
-      transition: fill 0.35s ease, filter 0.35s ease;   /* smooth color change */
+       transition: fill 0.25s ease, filter 0.25s ease,
+       transform 0.25s ease; /* smooth color change */
     }
 
     #africa-map path:hover {
-      fill: #5fd6c2;
+      fill: var(--map-hover);
+
       filter: drop-shadow(0 0 8px rgba(120, 255, 230, 0.35));    
-          /* orange on hover */
+      transform: translateY(-1px);
+          /* hover */
     }
 
     #africa-map path.selected {
-      fill: #7cf3dd;
+      fill:var(--map-selected);
       filter: drop-shadow(0 0 12px rgba(120, 255, 230, 0.55));   
           /* orange when clicked */
     }
 
-    /* =============================================
-       TOOLTIP (floating country name)
-       - Hidden by default, shown on hover via JS
-    ============================================= */
+    /* 
+       TOOLTIP-floating country name
+       
+    */
     #tooltip {
       position: absolute;
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(10, 15, 25, 0.6);
-      color:#bfe9ff;
+      color:var(--tooltip-text);
       padding: 5px 14px;
       border-radius: 999px;
       font-size: 13px;
       display: none;           /* hidden until JS shows it */
       pointer-events: none; 
       backdrop-filter:blur(8px);
-      border:before 1px solid rgba(120, 200, 255, 0.15);   /* so it doesn't block clicks */
+      border: 1px solid rgba(120, 200, 255, 0.15);   /* so it doesn't block clicks */
     }
 
-    /* =============================================
-       INFO PANEL (below the globe)
+    /* 
+       INFO PANEL below the globe
        - Shows country details after clicking
-    ============================================= */
+     */
     #info-panel {
       width: 500px;
       margin: 15px auto;
-      background: rgba(10, 15, 25, 0.55);
+      background: var(--panel-bg);
       border: 1px solid rgba(120, 200, 255, 0.15);
       border-radius: 14px;
       padding: 15px 20px;
@@ -137,9 +161,9 @@
     }
 
     #panel-flag   { font-size: 30px; }
-    #panel-name   { font-size: 20px; color: #7fd1ff; font-weight: bold; }
+    #panel-name   { font-size: 20px; color: var(--accent-blue); font-weight: bold; }
 
-    /* Stats row: capital, population, area */
+    /* capital, population, area */
     #panel-stats {
       display: flex;
       gap: 20px;
@@ -147,28 +171,28 @@
       flex-wrap: wrap;
 
      padding: 10px 12px;
-  border-radius: 10px;
+     border-radius: 10px;
 
-  border: 1px solid transparent;
-  background:
+     border: 1px solid transparent;
+     background:
     linear-gradient(rgba(198,145,0,0.06), rgba(198,145,0,0.03)) padding-box,
     linear-gradient(90deg, rgba(198,145,0,0.35), rgba(120,200,255,0.2)) border-box;
     }
 
-    .stat-label { font-size: 10px; color: rgba(180, 200, 220, 0.6); text-transform: uppercase; }
-    .stat-value { font-size: 13px; color: #d7ecff; }
+    .stat-label { font-size: 10px; color: var(--stat-label); text-transform: uppercase; }
+    .stat-value { font-size: 13px; color: var(--stat-value);}
 
     /* The fun fact text */
     #panel-fact {
       font-size: 13px;
-      color: rgba(210, 235, 255, 0.85);
+      color: var(--fact-text);
       line-height: 1.6;
     }
 
     /* Default hint text (before any country is clicked) */
     #panel-hint {
-      color: rgba(160, 180, 200, 0.6);
-      font-family: "Times New Roman"Times,serif;
+      color: var(--hint-text);
+      font-family: var(--main-font);
       font-size: 13px;
     }
 
@@ -178,9 +202,10 @@
       font-size: 12px;
       margin-top: 8px;
     }
-    /* =============================================
-   MOBILE RESPONSIVE FIX (ADD ONLY THIS)
-============================================= */
+    /* 
+   MOBILE RESPONSIVENESS
+   - Adjust sizes and layout for smaller screens
+ */
 @media (max-width: 600px) {
   #globe {
     width: 320px;
